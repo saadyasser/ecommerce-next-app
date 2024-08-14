@@ -1,0 +1,4 @@
+1. Customizing tailwind colors. // done
+2. Handling images in nextJS.
+3. how to extend in ts. // done
+4. how to use setState with old start to change state.

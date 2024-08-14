@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+.letter-spacing-1 {
+  letter-spacing: 1px
+}
+}
+

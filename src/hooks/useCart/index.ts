@@ -24,10 +24,22 @@ export const useCart = () => {
 
     const removeFromCart = (product: Product) => {
         const targetProductIndex = cart.findIndex((p) => p.id === product.id);
-        setCart((prevCart) => {
-            prevCart.splice(targetProductIndex, 1);
-            return [...prevCart];
-        });
+        const targetProduct = cart.find((p) => p.id === product.id);
+
+        if (targetProduct?.quantity === 1) {
+            setCart((prevCart) => {
+                prevCart.splice(targetProductIndex, 1);
+                return [...prevCart];
+            });
+        } else if (targetProduct?.quantity && targetProduct?.quantity > 1) {
+            targetProduct.quantity = targetProduct.quantity - 1;
+            console.log(targetProduct.quantity);
+
+            setCart((prevCart) => {
+                prevCart.splice(targetProductIndex, 1, targetProduct as Product);
+                return [...prevCart];
+            });
+        }
     };
 
     return { cart, removeFromCart, addToCart }

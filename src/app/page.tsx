@@ -8,7 +8,12 @@ export default function Home() {
   const { cart, addToCart, removeFromCart } = useCart();
   return (
     <main className=" w-11/12 mx-auto sm:flex sm:gap-8 py-16">
-      <ProductsList products={PRODUCTS} addToCart={addToCart} />
+      <ProductsList
+        cart={cart}
+        products={PRODUCTS}
+        addToCart={addToCart}
+        removeFromCart={removeFromCart}
+      />
       <Cart cart={cart} removeFromCart={removeFromCart} />
     </main>
   );

@@ -48,7 +48,7 @@ export const Cart = ({
               <Button
                 type="button"
                 size="sm"
-                className="w-full bg-red opacity-95 hover:opacity-100 text-white rounded-full"
+                className="w-full bg-red  text-white rounded-full"
               >
                 Confirm
               </Button>
@@ -73,7 +73,7 @@ export const Cart = ({
                   <Button
                     type="button"
                     size="sm"
-                    className="w-full bg-red opacity-95 hover:opacity-100 text-white rounded-full"
+                    className="w-full bg-red  text-white rounded-full"
                   >
                     Start New Order
                   </Button>
@@ -147,16 +147,42 @@ const CartItem = ({
           )}
         </div>
       </div>
-      <Image
-        width={20}
-        height={20}
-        alt=" = kkkk"
-        onClick={() => {
-          removeFromCart(product);
-        }}
-        className="cursor-pointer border border-black opacity-15 rounded-full p-1"
-        src="/assets/images/icon-remove-item.svg"
-      />
+      <Dialog>
+        <DialogTrigger asChild>
+          <Image
+            width={20}
+            height={20}
+            alt={product.name}
+            className="cursor-pointer border border-black opacity-15 rounded-full p-1"
+            src="/assets/images/icon-remove-item.svg"
+          />
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="mb-2">Item Deletion</DialogTitle>
+            <DialogDescription className="text-gray-400 text-xs">
+              We Hope you enjoyed your food.
+            </DialogDescription>
+          </DialogHeader>
+          <div>Are you sure you want to delete ?</div>
+
+          <DialogFooter className="sm:justify-start">
+            <DialogClose asChild>
+              <div className="flex justify-center">
+                <Button
+                  className="bg-red text-white  border-0"
+                  onClick={() => {
+                    removeFromCart(product);
+                  }}
+                >
+                  Delete
+                </Button>
+                <Button className="bg-white text-black ">Cancle</Button>
+              </div>
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };

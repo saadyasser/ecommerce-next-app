@@ -5,16 +5,16 @@ import { PRODUCTS } from "@/contants";
 import { useCart } from "@/hooks";
 
 export default function Home() {
-  const { cart, addToCart, removeFromCart } = useCart();
+  const { cart, addToCart, decrementQuantity } = useCart();
   return (
     <main className=" w-11/12 mx-auto sm:flex sm:gap-8 py-16">
       <ProductsList
         cart={cart}
         products={PRODUCTS}
         addToCart={addToCart}
-        removeFromCart={removeFromCart}
+        decrementQuantity={decrementQuantity}
       />
-      <Cart cart={cart} removeFromCart={removeFromCart} />
+      <Cart cart={cart} decrementQuantity={decrementQuantity} />
     </main>
   );
 }

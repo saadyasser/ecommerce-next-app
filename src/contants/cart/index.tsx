@@ -4,10 +4,10 @@ export const CART = [
   {
     id: 1,
     image: {
-      thumbnail: "./assets/images/image-waffle-thumbnail.jpg",
-      mobile: "./assets/images/image-waffle-mobile.jpg",
-      tablet: "./assets/images/image-waffle-tablet.jpg",
-      desktop: "./assets/images/image-waffle-desktop.jpg",
+      thumbnail: "/assets/images/image-waffle-thumbnail.jpg",
+      mobile: "/assets/images/image-waffle-mobile.jpg",
+      tablet: "/assets/images/image-waffle-tablet.jpg",
+      desktop: "/assets/images/image-waffle-desktop.jpg",
     },
     name: "Waffle with Berries",
     category: "Waffle",
@@ -17,10 +17,10 @@ export const CART = [
   {
     id: 3,
     image: {
-      thumbnail: "./assets/images/image-macaron-thumbnail.jpg",
-      mobile: "./assets/images/image-macaron-mobile.jpg",
-      tablet: "./assets/images/image-macaron-tablet.jpg",
-      desktop: "./assets/images/image-macaron-desktop.jpg",
+      thumbnail: "/assets/images/image-macaron-thumbnail.jpg",
+      mobile: "/assets/images/image-macaron-mobile.jpg",
+      tablet: "/assets/images/image-macaron-tablet.jpg",
+      desktop: "/assets/images/image-macaron-desktop.jpg",
     },
     name: "Macaron Mix of Five",
     category: "Macaron",

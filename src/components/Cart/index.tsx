@@ -17,10 +17,10 @@ import { Jersey_10 } from "next/font/google";
 
 export const Cart = ({
   cart,
-  removeFromCart,
+  decrementQuantity,
 }: {
   cart: Product[];
-  removeFromCart: (product: Product) => void;
+  decrementQuantity: (product: Product) => void;
 }) => {
   return (
     <div className="sm:basis-1/3 self-start bg-white rounded-md px-5 py-5">
@@ -42,7 +42,7 @@ export const Cart = ({
         </>
       ) : (
         <>
-          <CartList cart={cart} removeFromCart={removeFromCart} />
+          <CartList cart={cart} decrementQuantity={decrementQuantity} />
           <Dialog>
             <DialogTrigger asChild>
               <Button
@@ -63,8 +63,10 @@ export const Cart = ({
               <div>
                 <CartList
                   cart={cart}
-                  removeFromCart={removeFromCart}
+                  decrementQuantity={decrementQuantity}
                   className="bg-rose-50 px-3 py-4 rounded-md"
+                  withProductIcon={true}
+                  withRemoveIcon={false}
                 />
               </div>
 
@@ -88,15 +90,17 @@ export const Cart = ({
 };
 
 const CartList = ({
-  withRemoveIcon = true,
   className = "",
   cart,
-  removeFromCart,
+  decrementQuantity,
+  withRemoveIcon = true,
+  withProductIcon = false,
 }: {
-  withRemoveIcon?: boolean;
   className?: string;
   cart: Product[];
-  removeFromCart: (product: Product) => void;
+  decrementQuantity: (product: Product) => void;
+  withRemoveIcon?: boolean;
+  withProductIcon?: boolean;
 }) => {
   let totalPrice = 0;
   return (
@@ -111,7 +115,12 @@ const CartList = ({
                 index !== cart.length - 1 && "mb-4"
               }`}
             >
-              <CartItem removeFromCart={removeFromCart} product={product} />
+              <CartItem
+                decrementQuantity={decrementQuantity}
+                product={product}
+                withProductIcon={withProductIcon}
+                withRemoveIcon={withRemoveIcon}
+              />
             </li>
           );
         })}
@@ -126,63 +135,88 @@ const CartList = ({
 
 const CartItem = ({
   product,
-  removeFromCart,
+  decrementQuantity,
+  withRemoveIcon = true,
+  withProductIcon = false,
 }: {
   product: Product;
-  removeFromCart: (product: Product) => void;
+  decrementQuantity: (product: Product) => void;
+  withRemoveIcon?: boolean;
+  withProductIcon?: boolean;
 }) => {
   return (
     <>
-      <div>
-        <h4 className="text-sm font-medium">{product.name}</h4>
-        <div className="flex gap-2">
-          <span className="text-sm font-bold text-red">
-            {product.quantity}x
-          </span>
-          <span className="text-sm  text-gray-300 ">@ ${product.price}</span>
-          {product?.quantity && (
-            <span className="text-sm  text-gray-600">
+      <div className={` ${withProductIcon ? "flex gap-3 " : ""}`}>
+        {withProductIcon && (
+          <Image
+            width={60}
+            height={60}
+            src={product.image.mobile}
+            alt={product.name}
+            className="w-auto h-auto rounded-md"
+          />
+        )}
+        <div>
+          <h4 className="text-sm font-medium">{product.name}</h4>
+          <div className="flex gap-2">
+            <span className="text-sm font-bold text-red">
+              {product.quantity}x
+            </span>
+            <span className="text-sm  text-gray-300 ">@ ${product.price}</span>
+            {product?.quantity && withRemoveIcon && (
+              <span className="text-sm  text-gray-600">
+                ${product.price * product.quantity}
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+      {withRemoveIcon && product?.quantity ? (
+        <Dialog>
+          <DialogTrigger asChild>
+            <Image
+              width={20}
+              height={20}
+              alt={product.name}
+              className="cursor-pointer border border-black opacity-15 rounded-full p-1"
+              src="/assets/images/icon-remove-item.svg"
+            />
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle className="mb-2">Item Deletion</DialogTitle>
+              <DialogDescription className="text-gray-400 text-xs">
+                We Hope you enjoyed your food.
+              </DialogDescription>
+            </DialogHeader>
+            <div>Are you sure you want to delete ?</div>
+
+            <DialogFooter className="sm:justify-start">
+              <DialogClose asChild>
+                <div className="flex justify-center">
+                  <Button
+                    className="bg-red text-white  border-0"
+                    onClick={() => {
+                      decrementQuantity(product);
+                    }}
+                  >
+                    Delete
+                  </Button>
+                  <Button className="bg-white text-black ">Cancle</Button>
+                </div>
+              </DialogClose>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      ) : (
+        <>
+          {product.quantity && (
+            <span className="text-sm  text-black opacity-70 font-bold ">
               ${product.price * product.quantity}
             </span>
           )}
-        </div>
-      </div>
-      <Dialog>
-        <DialogTrigger asChild>
-          <Image
-            width={20}
-            height={20}
-            alt={product.name}
-            className="cursor-pointer border border-black opacity-15 rounded-full p-1"
-            src="/assets/images/icon-remove-item.svg"
-          />
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle className="mb-2">Item Deletion</DialogTitle>
-            <DialogDescription className="text-gray-400 text-xs">
-              We Hope you enjoyed your food.
-            </DialogDescription>
-          </DialogHeader>
-          <div>Are you sure you want to delete ?</div>
-
-          <DialogFooter className="sm:justify-start">
-            <DialogClose asChild>
-              <div className="flex justify-center">
-                <Button
-                  className="bg-red text-white  border-0"
-                  onClick={() => {
-                    removeFromCart(product);
-                  }}
-                >
-                  Delete
-                </Button>
-                <Button className="bg-white text-black ">Cancle</Button>
-              </div>
-            </DialogClose>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+        </>
+      )}
     </>
   );
 };

@@ -9,11 +9,11 @@ export const ProductsList = ({
   cart,
   products,
   addToCart,
-  removeFromCart,
+  decrementQuantity,
 }: {
   products: Product[];
   addToCart: (product: Product) => void;
-  removeFromCart: (product: Product) => void;
+  decrementQuantity: (product: Product) => void;
   cart: Product[];
 }) => {
   return (
@@ -21,9 +21,13 @@ export const ProductsList = ({
       <h1 className="text-2xl font-bold sm:mb-8 mb-10 letter-spacing-1">
         Desserts
       </h1>
-      <div className="grid  grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-12 md:gap-y-6  pl-1">
+      <div
+        className="grid  grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-12 md:gap-y-6  pl-1"
+        role="products-container"
+      >
         {products.map((product, index) => (
           <article
+            role="product"
             key={product.id}
             className={`  ${
               index === products.length - 1 ? "" : "sm:mb-0 mb-10"
@@ -67,7 +71,7 @@ export const ProductsList = ({
                   }
                   <div
                     onClick={() => {
-                      removeFromCart(product);
+                      decrementQuantity(product);
                     }}
                     className="w-4 h-4 flex items-center justify-center border border-white rounded-full ml-6"
                   >
@@ -82,6 +86,7 @@ export const ProductsList = ({
                 </Button>
               ) : (
                 <Button
+                  role="add-to-cart"
                   onClick={() => {
                     addToCart(product);
                   }}

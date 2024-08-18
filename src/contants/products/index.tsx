@@ -96,7 +96,7 @@ export const PRODUCTS = [
     price: 4.5,
   },
   {
-    id: 10,
+    id: 9,
     image: {
       thumbnail: "./assets/images/image-panna-cotta-thumbnail.jpg",
       mobile: "./assets/images/image-panna-cotta-mobile.jpg",

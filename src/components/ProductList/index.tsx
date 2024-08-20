@@ -4,7 +4,9 @@ import { Button } from "../ui/button";
 import { CartItemType } from "@/types";
 import Image from "next/image";
 import { isFound } from "@/utils";
-
+interface ItemToAddToCart extends Product {
+  quantity: number;
+}
 export const ProductsList = ({
   cart,
   products,
@@ -12,9 +14,9 @@ export const ProductsList = ({
   decrementQuantity,
 }: {
   products: Product[];
-  addToCart: (product: Product) => void;
-  decrementQuantity: (product: Product) => void;
-  cart: Product[];
+  addToCart: (product: ItemToAddToCart) => void;
+  decrementQuantity: (cartItem: CartItemType) => void;
+  cart: CartItemType[];
 }) => {
   return (
     <div className="sm:mb-0 mb-12 sm:basis-2/3">
@@ -25,7 +27,7 @@ export const ProductsList = ({
         className="grid  grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-12 md:gap-y-6  pl-1"
         role="products-container"
       >
-        {products.map((product, index) => (
+        {products.map((product: Product, index) => (
           <article
             role="product"
             key={product.id}
@@ -53,7 +55,7 @@ export const ProductsList = ({
                 >
                   <div
                     onClick={() => {
-                      addToCart(product);
+                      addToCart(product as ItemToAddToCart);
                     }}
                     className="w-4 h-4 flex items-center justify-center border border-white rounded-full mr-6"
                   >
@@ -71,7 +73,10 @@ export const ProductsList = ({
                   }
                   <div
                     onClick={() => {
-                      decrementQuantity(product);
+                      const cartItem = cart.find(
+                        (cartItem) => cartItem.id === product.id
+                      );
+                      decrementQuantity(cartItem as CartItemType);
                     }}
                     className="w-4 h-4 flex items-center justify-center border border-white rounded-full ml-6"
                   >
@@ -88,7 +93,7 @@ export const ProductsList = ({
                 <Button
                   role="add-to-cart"
                   onClick={() => {
-                    addToCart(product);
+                    addToCart(product as ItemToAddToCart);
                   }}
                   size="sm"
                   className="font-semibold text-xs text-black absolute bottom-[-16px] sm:bottom-[-16px] bg-white border-gray-300 border rounded-3xl hover:bg-gray-100"

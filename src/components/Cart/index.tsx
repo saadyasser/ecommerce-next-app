@@ -14,13 +14,15 @@ import {
 import { useCart } from "@/hooks";
 import Image from "next/image";
 import { Jersey_10 } from "next/font/google";
+import EmptyCart from "./EmptyCart";
+import { CartItem } from "./CatItem";
 
 export const Cart = ({
   cart,
   decrementQuantity,
 }: {
-  cart: Product[];
-  decrementQuantity: (product: Product) => void;
+  cart: CartItemType[];
+  decrementQuantity: (product: CartItemType) => void;
 }) => {
   return (
     <div className="sm:basis-1/3 self-start bg-white rounded-md px-5 py-5">
@@ -28,21 +30,14 @@ export const Cart = ({
         Your Cart ({cart.length})
       </h2>
       {cart.length === 0 ? (
-        <>
-          <Image
-            width={10}
-            height={10}
-            alt=" = kkkk"
-            className="w-[70%] mx-auto"
-            src="/assets/images/illustration-empty-cart.svg"
-          />
-          <p className="text-sm text-center text-red">
-            Your added items will appear here.
-          </p>
-        </>
+        <EmptyCart />
       ) : (
         <>
-          <CartList cart={cart} decrementQuantity={decrementQuantity} />
+          <CartList
+            className="mb-6"
+            cart={cart}
+            decrementQuantity={decrementQuantity}
+          />
           <Dialog>
             <DialogTrigger asChild>
               <Button
@@ -64,7 +59,6 @@ export const Cart = ({
                 <CartList
                   cart={cart}
                   decrementQuantity={decrementQuantity}
-                  className="bg-rose-50 px-3 py-4 rounded-md"
                   withProductIcon={true}
                   withRemoveIcon={false}
                 />
@@ -97,27 +91,28 @@ const CartList = ({
   withProductIcon = false,
 }: {
   className?: string;
-  cart: Product[];
-  decrementQuantity: (product: Product) => void;
+  cart: CartItemType[];
+  decrementQuantity: (product: CartItemType) => void;
   withRemoveIcon?: boolean;
   withProductIcon?: boolean;
 }) => {
   let totalPrice = 0;
   return (
-    <div className={className}>
+    <div className={`bg-rose-50 px-3 py-4 rounded-md ${className} `}>
       <ul>
-        {cart.map((product, index) => {
-          if (product.quantity) totalPrice += product.price * product.quantity;
+        {cart.map((cartItem: CartItemType, index) => {
+          if (cartItem.quantity)
+            totalPrice += cartItem.price * cartItem.quantity;
           return (
             <li
-              key={product.id}
+              key={cartItem.id}
               className={`flex justify-between items-center border-gray-100 pb-3 border-b ${
                 index !== cart.length - 1 && "mb-4"
               }`}
             >
               <CartItem
                 decrementQuantity={decrementQuantity}
-                product={product}
+                cartItem={cartItem}
                 withProductIcon={withProductIcon}
                 withRemoveIcon={withRemoveIcon}
               />
@@ -125,99 +120,11 @@ const CartList = ({
           );
         })}
       </ul>
-      <div className=" flex justify-between my-5">
+      <div className=" flex justify-between mt-5">
         <p className="text-sm opacity-70">Order Total</p>
-        <span className="text-xl font-bold ">${totalPrice}</span>
+        <span className=" font-bold ">${totalPrice}</span>
       </div>
     </div>
-  );
-};
-
-const CartItem = ({
-  product,
-  decrementQuantity,
-  withRemoveIcon = true,
-  withProductIcon = false,
-}: {
-  product: Product;
-  decrementQuantity: (product: Product) => void;
-  withRemoveIcon?: boolean;
-  withProductIcon?: boolean;
-}) => {
-  return (
-    <>
-      <div className={` ${withProductIcon ? "flex gap-3 " : ""}`}>
-        {withProductIcon && (
-          <Image
-            width={60}
-            height={60}
-            src={product.image.mobile}
-            alt={product.name}
-            className="w-auto h-auto rounded-md"
-          />
-        )}
-        <div>
-          <h4 className="text-sm font-medium">{product.name}</h4>
-          <div className="flex gap-2">
-            <span className="text-sm font-bold text-red">
-              {product.quantity}x
-            </span>
-            <span className="text-sm  text-gray-300 ">@ ${product.price}</span>
-            {product?.quantity && withRemoveIcon && (
-              <span className="text-sm  text-gray-600">
-                ${product.price * product.quantity}
-              </span>
-            )}
-          </div>
-        </div>
-      </div>
-      {withRemoveIcon && product?.quantity ? (
-        <Dialog>
-          <DialogTrigger asChild>
-            <Image
-              width={20}
-              height={20}
-              alt={product.name}
-              className="cursor-pointer border border-black opacity-15 rounded-full p-1"
-              src="/assets/images/icon-remove-item.svg"
-            />
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle className="mb-2">Item Deletion</DialogTitle>
-              <DialogDescription className="text-gray-400 text-xs">
-                We Hope you enjoyed your food.
-              </DialogDescription>
-            </DialogHeader>
-            <div>Are you sure you want to delete ?</div>
-
-            <DialogFooter className="sm:justify-start">
-              <DialogClose asChild>
-                <div className="flex justify-center">
-                  <Button
-                    className="bg-red text-white  border-0"
-                    onClick={() => {
-                      decrementQuantity(product);
-                    }}
-                  >
-                    Delete
-                  </Button>
-                  <Button className="bg-white text-black ">Cancle</Button>
-                </div>
-              </DialogClose>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      ) : (
-        <>
-          {product.quantity && (
-            <span className="text-sm  text-black opacity-70 font-bold ">
-              ${product.price * product.quantity}
-            </span>
-          )}
-        </>
-      )}
-    </>
   );
 };
 

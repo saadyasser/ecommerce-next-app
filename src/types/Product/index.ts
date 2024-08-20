@@ -9,7 +9,6 @@ export interface Product {
         tablet: string;
         desktop: string;
     },
-    quantity?: number;
 };
 
 export default Product

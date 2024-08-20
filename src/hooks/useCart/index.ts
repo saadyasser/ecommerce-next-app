@@ -1,12 +1,17 @@
 import { CART } from "@/contants";
-import { Product } from "@/types";
+import { CartItemType, Product } from "@/types";
 import { useState } from "react";
 
 export const useCart = () => {
 
-    const [cart, setCart] = useState<Product[]>(CART);
+    const [cart, setCart] = useState<CartItemType[]>(CART);
 
-    const addToCart = (product: Product) => {
+
+    interface ItemToAddToCart extends Product {
+        quantity: number;
+    }
+
+    const addToCart = (product: ItemToAddToCart) => {
         const targetProduct = cart.find((p) => p.id === product.id);
         const targetProductIndex = cart.findIndex((p) => p.id === product.id);
 
@@ -22,9 +27,9 @@ export const useCart = () => {
         }
     };
 
-    const decrementQuantity = (product: Product) => {
-        const targetProductIndex = cart.findIndex((p) => p.id === product.id);
-        const targetProduct = cart.find((p) => p.id === product.id);
+    const decrementQuantity = (cartItem: CartItemType) => {
+        const targetProductIndex = cart.findIndex((p) => p.id === cartItem.id);
+        const targetProduct = cart.find((p) => p.id === cartItem.id);
 
         if (targetProduct?.quantity === 1) {
             setCart((prevCart) => {
@@ -35,7 +40,7 @@ export const useCart = () => {
             targetProduct.quantity = targetProduct.quantity - 1;
 
             setCart((prevCart) => {
-                prevCart.splice(targetProductIndex, 1, targetProduct as Product);
+                prevCart.splice(targetProductIndex, 1, targetProduct);
                 return [...prevCart];
             });
         }

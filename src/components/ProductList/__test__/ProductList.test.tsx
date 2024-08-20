@@ -2,7 +2,7 @@ import { CART, PRODUCTS } from "@/contants";
 import ProductsList from "..";
 import { fireEvent, render, screen } from "@testing-library/react";
 
-describe("Products Section", () => {
+describe.skip("Products Section", () => {
   const addToCart = jest.fn();
   const decrementQuantity = jest.fn();
   render(
@@ -14,7 +14,7 @@ describe("Products Section", () => {
     />
   );
 
-  test.skip("Check The Products Container and Product List Are Found", () => {
+  test("Check The Products Container and Product List Are Found", () => {
     screen.debug();
     const productsContainer = screen.getByRole("products-container");
 

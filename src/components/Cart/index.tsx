@@ -19,10 +19,10 @@ import { CartItem } from "./CatItem";
 
 export const Cart = ({
   cart,
-  decrementQuantity,
+  removeItemFully,
 }: {
   cart: CartItemType[];
-  decrementQuantity: (product: CartItemType) => void;
+  removeItemFully: (removeItemFully: CartItemType) => void;
 }) => {
   return (
     <div className="sm:basis-1/3 self-start bg-white rounded-md px-5 py-5">
@@ -36,7 +36,7 @@ export const Cart = ({
           <CartList
             className="mb-6"
             cart={cart}
-            decrementQuantity={decrementQuantity}
+            removeItemFully={removeItemFully}
           />
           <Dialog>
             <DialogTrigger asChild>
@@ -58,7 +58,7 @@ export const Cart = ({
               <div>
                 <CartList
                   cart={cart}
-                  decrementQuantity={decrementQuantity}
+                  removeItemFully={removeItemFully}
                   withProductIcon={true}
                   withRemoveIcon={false}
                 />
@@ -86,13 +86,13 @@ export const Cart = ({
 const CartList = ({
   className = "",
   cart,
-  decrementQuantity,
+  removeItemFully,
   withRemoveIcon = true,
   withProductIcon = false,
 }: {
   className?: string;
   cart: CartItemType[];
-  decrementQuantity: (product: CartItemType) => void;
+  removeItemFully: (cartItem: CartItemType) => void;
   withRemoveIcon?: boolean;
   withProductIcon?: boolean;
 }) => {
@@ -111,7 +111,7 @@ const CartList = ({
               }`}
             >
               <CartItem
-                decrementQuantity={decrementQuantity}
+                removeItemFully={removeItemFully}
                 cartItem={cartItem}
                 withProductIcon={withProductIcon}
                 withRemoveIcon={withRemoveIcon}

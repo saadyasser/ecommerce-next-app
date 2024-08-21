@@ -6,7 +6,7 @@ import { useCart } from "@/hooks";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  const { cart, addToCart, decrementQuantity } = useCart();
+  const { cart, addToCart, removeItemFully, decrementQuantity } = useCart();
   const [error, setError] = useState<null | Error>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState([]);
@@ -40,7 +40,7 @@ export default function Home() {
         />
       )}
 
-      <Cart cart={cart} decrementQuantity={decrementQuantity} />
+      <Cart cart={cart} removeItemFully={removeItemFully} />
     </main>
   );
 }

@@ -46,7 +46,12 @@ export const useCart = () => {
         }
     };
 
-    return { cart, decrementQuantity, addToCart }
+    const removeItemFully = (cartItem: CartItemType) => {
+        setCart((prevCart) => {
+            return [...prevCart.filter(item => item.id !== cartItem.id)]
+        });
+    }
+    return { cart, decrementQuantity, addToCart, removeItemFully }
 }
 
 export default useCart;

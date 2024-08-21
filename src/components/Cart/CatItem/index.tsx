@@ -14,12 +14,12 @@ import Image from "next/image";
 
 export const CartItem = ({
   cartItem,
-  decrementQuantity,
+  removeItemFully,
   withRemoveIcon = true,
   withProductIcon = false,
 }: {
   cartItem: CartItemType;
-  decrementQuantity: (product: CartItemType) => void;
+  removeItemFully: (CartItemType: CartItemType) => void;
   withRemoveIcon?: boolean;
   withProductIcon?: boolean;
 }) => {
@@ -76,7 +76,7 @@ export const CartItem = ({
                   <Button
                     className="bg-red text-white  border-0"
                     onClick={() => {
-                      decrementQuantity(cartItem);
+                      removeItemFully(cartItem);
                     }}
                   >
                     Delete

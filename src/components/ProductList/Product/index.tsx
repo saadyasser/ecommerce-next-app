@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/hooks";
 import { CartItemType, ItemToAddToCart, Product as ProductType } from "@/types";
@@ -5,16 +7,10 @@ import { isFound } from "@/utils";
 import Image from "next/image";
 import React from "react";
 
-export const Product = ({
-  product,
-  className,
-}: {
-  product: ProductType;
-  className: string;
-}) => {
+export const Product = ({ product }: { product: ProductType }) => {
   const { cart, addToCart, decrementQuantity } = useCart();
   return (
-    <article role="product" key={product.id} className={className}>
+    <>
       <div
         className={`sm:mb-7 mb-10 relative flex justify-center rounded-md  ${
           isFound(cart, product) ? "border-2 border-red" : ""
@@ -93,7 +89,7 @@ export const Product = ({
       <span className="text-2xl sm:text-base font-bold text-red">
         ${product.price}
       </span>
-    </article>
+    </>
   );
 };
 

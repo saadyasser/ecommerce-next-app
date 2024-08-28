@@ -22,16 +22,19 @@ export const ProductsList = ({
         Desserts
       </h1>
       <div
-        className="grid  grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-12 md:gap-y-6  pl-1"
+        className="md:grid  md:grid-cols-2 lg:grid-cols-3 md:gap-x-4 lg:gap-y-12 md:gap-y-6  pl-1"
         role="products-container"
       >
         {products.map((product: ProductType, index) => (
-          <Product
-            product={product}
+          <article
+            role="product"
+            key={product.id}
             className={`  ${
               index === products.length - 1 ? "" : "sm:mb-0 mb-10"
             }`}
-          />
+          >
+            <Product product={product} />
+          </article>
         ))}
       </div>
     </div>

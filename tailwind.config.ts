@@ -9,7 +9,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        red: "hsl(14, 86%, 42%)",
+        orange: "hsl(26, 100%, 55%)",
+        paleOrange: "hsl(25, 100%, 94%)",
+        red: "hsl(26, 100%, 55%)",
         rose: {
           50: "hsl(20, 50%, 98%)",
           100: "hsl(13, 31 %, 94 %)",

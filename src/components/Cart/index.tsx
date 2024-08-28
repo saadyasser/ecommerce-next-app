@@ -1,3 +1,4 @@
+"use client";
 import { CartItemType, Product } from "@/types";
 import React from "react";
 import {
@@ -11,9 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components";
-import { useCart } from "@/hooks";
-import Image from "next/image";
-import { Jersey_10 } from "next/font/google";
+
 import EmptyCart from "./EmptyCart";
 import { CartItem } from "./CatItem";
 

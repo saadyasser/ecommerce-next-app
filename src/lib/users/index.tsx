@@ -20,8 +20,8 @@ const users: User[] = [
   },
 ];
 
-export async function findUserByUsername(username: string) {
-  return users.find((user) => user.username === username);
+export async function findUserByEmail(email: string) {
+  return users.find((user) => user.email === email);
 }
 
 export async function validatePassword(user: User, password: string) {

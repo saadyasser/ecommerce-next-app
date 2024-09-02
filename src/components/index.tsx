@@ -5,3 +5,4 @@ export * from "./ui/button";
 export * from "./ui/skeleton";
 export * from "./ProductsListLoading";
 export * from "./NavBar";
+export * from "./Users";

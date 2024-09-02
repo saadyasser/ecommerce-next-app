@@ -6,10 +6,12 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 import NavMenu from "./NavMenu";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { data: session, status } = useSession();
+  const router = useRouter();
 
   return (
     <nav className=" flex justify-between py-8 items-center">
@@ -55,7 +57,8 @@ export const NavBar = () => {
           {status === "authenticated" && (
             <Button
               onClick={async () => {
-                await signOut({ redirect: true, callbackUrl: "/" });
+                await signOut({ redirect: false });
+                router.push("/sign-in", undefined, { shallow: true });
               }}
               size="sm"
               className="bg-orange px-6 text-white"
@@ -63,10 +66,10 @@ export const NavBar = () => {
               Sign Out
             </Button>
           )}
-          {status === "unauthenticated" && (
+          {status === "unauthenticated" && router.pathname !== "/sign-in" && (
             <Button
               onClick={() => {
-                signIn();
+                router.push("/sign-in", undefined, { shallow: true });
               }}
               size="sm"
               className="bg-orange px-6 text-white"
@@ -89,7 +92,7 @@ export const NavBar = () => {
                 alt="Close Icon"
               />
               <NavMenu
-                containerClassName="flex-col gap-5"
+                containerClassName="flex-col gap-5 animate-scaleX"
                 navItemClassName="text-[rgba(0,0,0,.8)] hover:text-black"
               />
             </div>

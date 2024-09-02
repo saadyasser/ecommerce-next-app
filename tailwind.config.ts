@@ -7,6 +7,7 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+
     extend: {
       colors: {
         orange: "hsl(26, 100%, 55%)",
@@ -25,6 +26,18 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
+      keyframes: {
+        scaleX: {
+          '0%': { transform: 'scaleX(0)' },
+          '25%': { transform: 'scaleX(.25)' },
+          '50%': { transform: 'scaleX(.5)' },
+          '75%': { transform: 'scaleX(.75)' },
+          '100%': { transform: 'scaleX(1)' },
+        },
+      },
+      animation: {
+        scaleX: 'scaleX .5s ease-in-out ',
       },
     },
   },

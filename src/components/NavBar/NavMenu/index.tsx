@@ -9,7 +9,7 @@ export const NavMenu = ({
   navItemClassName?: string;
 }) => {
   return (
-    <ul className={`flex ${containerClassName}`}>
+    <ul className={`flex  ${containerClassName} transition-all delay-1000`}>
       <li>
         <Link href="/" className={`font-bold ${navItemClassName}`}>
           Collections

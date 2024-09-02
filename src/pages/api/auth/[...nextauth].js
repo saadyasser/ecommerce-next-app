@@ -2,19 +2,19 @@
 
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { findUserByUsername, validatePassword } from "@/lib/users";
+import { findUserByEmail, validatePassword } from "@/lib/users";
 
 export default NextAuth({
   providers: [
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "john_doe" },
+        username: { label: "Email", type: "email", placeholder: "email" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
         
-        const user = await findUserByUsername(credentials.username);
+        const user = await findUserByEmail(credentials.email);
         
         if (user ) {
           console.log('signing-success...', credentials);

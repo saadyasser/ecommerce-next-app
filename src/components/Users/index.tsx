@@ -28,7 +28,7 @@ const Users = () => {
   return (
     <div>
       <h1>Users List</h1>
-      {error && <p>{error.error}</p>}
+      {/* {error && <p>{error.error}</p>} */}
       {loading ? (
         <div>Loading...</div>
       ) : users.length ? (

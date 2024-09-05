@@ -24,6 +24,7 @@ const Users = () => {
     // .catch((error) => console.error("Error fetching users:", error));
     setLoading(false);
   }, []);
+  console.log(users, "users list");
 
   return (
     <div>
